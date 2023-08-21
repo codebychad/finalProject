@@ -66,7 +66,7 @@ public class ContactMessageService {
 	public String deleteById(Long id){
 		getContactMessageById(id);
 		contactMessageRepository.deleteById(id);
-		return Messages.CONTACT_MESSAGE_DELETED_SUCCESFULLY;
+		return Messages.CONTACT_MESSAGE_DELETED_SUCCESSFULLY;
 	}
 
 	public List<ContactMessage>searchByTimeBetween(String startHourString, String startMinuteString,

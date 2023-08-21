@@ -42,7 +42,7 @@ public class ContactMessage implements Serializable {
 	private String message;
 
 	//2025-06-05
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "US")
 	private LocalDateTime dateTime;
 
 }

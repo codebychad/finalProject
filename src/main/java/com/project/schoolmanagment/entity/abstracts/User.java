@@ -1,8 +1,9 @@
 package com.project.schoolmanagment.entity.abstracts;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.project.schoolmanagment.entity.concretes.user.UserRole;
+import com.project.schoolmanagment.entity.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,39 +13,45 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @MappedSuperclass
+//properties will be used im child classes
+//since we do not have @Entity annotation here, this class will not be a table
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
+//is a kind of builder design pattern imp.
+//https://www.baeldung.com/lombok-builder-inheritance
 public abstract class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(unique = true)
-    private String username;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(unique = true)
-    private String ssn;
+	@Column(unique = true)
+	private String username;
 
-    private String name;
+	@Column(unique = true)
+	private String ssn;
 
-    private String surname;
+	private String name;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate birthDay;
+	private String surname;
 
-    private String birthPlace;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private LocalDate birthDay;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
+	private String birthPlace;
 
-    @Column(unique = true)
-    private String phoneNumber;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private String password;
 
+	@Column(unique = true)
+	private String phoneNumber;
 
+	@OneToOne
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private UserRole userRole;
 
-
-
-
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
 }
