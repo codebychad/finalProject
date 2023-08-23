@@ -26,6 +26,9 @@ public class EducationTerm {
 	@Enumerated(EnumType.STRING)
 	private Term term;
 
+	/**
+	 * starting date of the education term
+	 */
 	@Column(name = "start_date")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate startDate;
