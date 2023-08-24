@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -38,35 +37,41 @@ public class AdminController {
 		return new ResponseEntity<>(admins, HttpStatus.OK);
 	}
 
-	@DeleteMapping("delete/{id}")
-	public ResponseEntity<String> deleteByAdmin(@PathVariable Long id){
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String>deleteByAdmin(@PathVariable Long id){
 		return ResponseEntity.ok(adminService.deleteById(id));
 	}
 
 	//TODO
-	//ALO ABI
+	//ALI
 	@GetMapping("/getAllAdmins")
-	public ResponseEntity<List<AdminResponse>> getAllAdmins(){
+	public ResponseEntity<List<AdminResponse>>getAllAdmins(){
 		return null;
 	}
+
 	//TODO
 	//ENES
 	@GetMapping("/getAdminByPage")
-	public ResponseEntity<AdminResponse> getAdminById(Long id){
+	public ResponseEntity<AdminResponse>getAdminById(Long id){
 		return null;
 	}
+
 	//TODO
 	//ZIYA
 	@GetMapping("/getAdminByUserName/{username}")
-	public ResponseEntity<List<AdminResponse>> findAdminsByUserName(@PathVariable String username){
+	public ResponseEntity<List<AdminResponse>>findAdminsByUsername(@PathVariable String username){
 		return null;
 	}
+
 	//TODO
 	//NACI
-	@GetMapping("/getAdminByNameOrLastName")
-	public ResponseEntity<List<AdminResponse>> getAdminByNameOrLastName(@RequestParam String query){
+	@GetMapping("/getAdminByNameOrLastname")
+	public ResponseEntity<List<AdminResponse>>getAdminByNameOrLastname(@RequestParam String query){
 		return null;
 	}
+
+
+
 
 
 

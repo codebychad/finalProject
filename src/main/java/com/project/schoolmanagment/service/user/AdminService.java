@@ -59,9 +59,10 @@ public class AdminService {
 
 	}
 
-	public String deleteById(Long id) {
-		Optional<Admin> admin = adminRepository.findById(id);
-		if (admin.isEmpty()){
+	public String deleteById(Long id){
+		//we should check the database if this id really exist
+		Optional<Admin>admin =adminRepository.findById(id);
+		if(admin.isEmpty()){
 			throw new ResourceNotFoundException(String.format(ErrorMessages.NOT_FOUND_USER_MESSAGE,id));
 		} else if (admin.get().isBuiltIn()) {
 			throw new ConflictException(ErrorMessages.NOT_PERMITTED_METHOD_MESSAGE);
@@ -78,6 +79,4 @@ public class AdminService {
 	public long countAllAdmins(){
 		return adminRepository.count();
 	}
-
-
 }
