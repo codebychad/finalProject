@@ -2,6 +2,10 @@ package com.project.schoolmanagment.payload.messages;
 
 public abstract class ErrorMessages {
 
+	//user
+	public static final String NOT_FOUND_USER_MESSAGE = "Error: User Not found with id %s";
+	public static final String NOT_PERMITTED_METHOD_MESSAGE = "You do not have any permission to do this operation";
+
 	//UserRole
 	public static final String ROLE_NOT_FOUND = "There is no role like that, check the database";
 	public static final String ROLE_ALREADY_EXIST = "Role already exist in DB";

@@ -25,7 +25,6 @@ public class UniquePropertyValidator {
 		if (values.length==4){
 			email = values[3];
 		}
-
 		if (adminRepository.existsByUsername(username) || deanRepository.existsByUsername(username) ||
 				studentRepository.existsByUsername(username) || teacherRepository.existsByUsername(username) ||
 				viceDeanRepository.existsByUsername(username) ) {
@@ -39,10 +38,8 @@ public class UniquePropertyValidator {
 				viceDeanRepository.existsByPhoneNumber(phone) ) {
 			throw new ConflictException(String.format(ErrorMessages.ALREADY_REGISTER_MESSAGE_PHONE_NUMBER, phone));
 		} else if (studentRepository.existsByEmail(email) || teacherRepository.existsByEmail(email)) {
-			throw new ConflictException(String.format(ErrorMessages.ALREADY_REGISTER_MESSAGE_SSN, email));
+			throw new ConflictException(String.format(ErrorMessages.ALREADY_REGISTER_MESSAGE_EMAIL, email));
 		}
-
-
 	}
 
 }

@@ -2,16 +2,24 @@ package com.project.schoolmanagment.service.user;
 
 import com.project.schoolmanagment.entity.concretes.user.Admin;
 import com.project.schoolmanagment.entity.enums.RoleType;
+import com.project.schoolmanagment.exception.ConflictException;
+import com.project.schoolmanagment.exception.ResourceNotFoundException;
 import com.project.schoolmanagment.payload.mappers.AdminMapper;
+import com.project.schoolmanagment.payload.messages.ErrorMessages;
 import com.project.schoolmanagment.payload.messages.SuccessMessages;
 import com.project.schoolmanagment.payload.request.user.AdminRequest;
 import com.project.schoolmanagment.payload.response.message.ResponseMessage;
 import com.project.schoolmanagment.payload.response.user.AdminResponse;
 import com.project.schoolmanagment.repository.user.AdminRepository;
+import com.project.schoolmanagment.service.helper.PageableHelper;
+import com.project.schoolmanagment.service.validator.UniquePropertyValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,8 +28,15 @@ public class AdminService {
 	private final AdminMapper adminMapper;
 	private final AdminRepository adminRepository;
 	private final UserRoleService userRoleService;
+	private final UniquePropertyValidator uniquePropertyValidator;
+	private final PageableHelper pageableHelper;
 
 	public ResponseMessage<AdminResponse>saveAdmin(AdminRequest adminRequest){
+
+		//we need to check duplication
+		uniquePropertyValidator.checkDuplicate(adminRequest.getUsername(),
+												adminRequest.getSsn(),
+												adminRequest.getPhoneNumber());
 
 		// we must map DTO -> Entity
 		Admin admin = adminMapper.mapAdminRequestToAdmin(adminRequest);
@@ -43,4 +58,26 @@ public class AdminService {
 				.build();
 
 	}
+
+	public String deleteById(Long id) {
+		Optional<Admin> admin = adminRepository.findById(id);
+		if (admin.isEmpty()){
+			throw new ResourceNotFoundException(String.format(ErrorMessages.NOT_FOUND_USER_MESSAGE,id));
+		} else if (admin.get().isBuiltIn()) {
+			throw new ConflictException(ErrorMessages.NOT_PERMITTED_METHOD_MESSAGE);
+		}
+		adminRepository.deleteById(id);
+		return SuccessMessages.ADMIN_DELETE;
+	}
+
+	public Page<Admin> getAllAdminsByPage(int page, int size, String sort, String type){
+		Pageable pageable = pageableHelper.getPageableWithProperties(page, size, sort, type);
+		return adminRepository.findAll(pageable);
+	}
+
+	public long countAllAdmins(){
+		return adminRepository.count();
+	}
+
+
 }
