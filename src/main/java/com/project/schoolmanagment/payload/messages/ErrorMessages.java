@@ -3,6 +3,8 @@ package com.project.schoolmanagment.payload.messages;
 public abstract class ErrorMessages {
 
 	//users
+
+	public static final String NOT_FOUND_USER_MESSAGE_USERNAME = "Error: User not found with username %s";
 	public static final String NOT_FOUND_USER_MESSAGE = "Error: User not found with id %s";
 	public static final String NOT_PERMITTED_METHOD_MESSAGE = "You do not have any permission to do this operation";
 

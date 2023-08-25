@@ -51,16 +51,17 @@ public class AdminController {
 
 	//TODO
 	//ENES
-	@GetMapping("/getAdminByPage")
-	public ResponseEntity<AdminResponse>getAdminById(Long id){
-		return null;
+	@GetMapping("/getAdminById/{id}")
+	public ResponseEntity<AdminResponse>getAdminById(@PathVariable Long id)
+	{
+		return ResponseEntity.ok(adminService.findById(id));
 	}
 
 	//TODO
 	//ZIYA
 	@GetMapping("/getAdminByUserName/{username}")
 	public ResponseEntity<List<AdminResponse>>findAdminsByUsername(@PathVariable String username){
-		return null;
+		return ResponseEntity.ok(adminService.findAdminsByUsername(username));
 	}
 
 	//TODO
